@@ -13,6 +13,7 @@ import CategoryPage from './pages/category/category'
 import News from './components/news/news'
 import Notification from './components/notification/notification'
 import ScrollToTop from './components/scrollTop/scrollTop'
+import NotFound from './pages/notFound/notFound'
 
 const AppContext = () => {
   const { user } = useContext(AuthContext)
@@ -42,6 +43,7 @@ const AppContext = () => {
         <Route path="/category/:slug" element={<CategoryPage />} />
         <Route path="/news" element={<News />} />
         <Route path="/notifications" element={<Notification />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>

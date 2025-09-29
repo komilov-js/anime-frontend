@@ -26,8 +26,8 @@ const Notification = () => {
               <div key={notif.id} className='notification-item'>
                 <p>{notif.title}</p>
                 <p>Bizning ijtimoiy-tarmoqlarimiz</p>
-                <p>Telegram: <a href=''>UZ-ANIME</a></p>
-                <p>Xurmatli foydalanuvchi saytdagi muammolar yoki noqulayliklar to'g'risida bizga xabar bering: <a href="" target='_black'>Telegram</a> </p>
+                <p>Telegram: <a href='https://t.me/anivibe_official' translate='_blank'>UZ-ANIME</a></p>
+                <p>Xurmatli foydalanuvchi saytdagi muammolar yoki noqulayliklar to'g'risida bizga xabar bering: <a  href="https://t.me/anivibe_official" target='_blank'>Telegram</a> </p>
                 {/* <p>{notif.message}</p> */}
               </div>
             ))

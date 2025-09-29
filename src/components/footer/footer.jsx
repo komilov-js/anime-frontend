@@ -34,14 +34,14 @@ const Footer = () => {
 
           <p className="disclaimer">
             <strong>Eslatma:</strong> Agar saytimizdagi material sizning mualliflik
-            huquqlaringizni buzayotgan bo‘lsa, iltimos <a href="https://t.me/uzanime_offiicial">@Telegram</a> ga murojaat qiling.
+            huquqlaringizni buzayotgan bo‘lsa, iltimos <a href="https://t.me/anivibe_official">@Telegram</a> ga murojaat qiling.
             Biz shikoyatni tekshirib, zarur choralarni koʻramiz.
           </p>
 
           <div className="contact">
             <a
               className="telegram-link"
-              href="https://t.me/uzanime_official"
+              href="https://t.me/anivibe_official"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Telegram kanalimiz"

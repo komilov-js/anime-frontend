@@ -131,7 +131,7 @@ export default function AnimeDetail() {
                         <button onClick={handleSave} disabled={saved}>
                             {saved ? "Saqlandi ✅" : "Saqlash"}
                         </button>
-                        <a href="https://t.me/uzanime_official" target="_blank">
+                        <a href="https://t.me/anivibe_official" target="_blank">
                             Telegram Kanalimizga Qo'shiling <FaTelegramPlane />
                         </a>
                     </div>

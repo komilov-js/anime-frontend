@@ -121,7 +121,7 @@ const Nav = () => {
                 </svg>
               </div>
             </Link>
-            <a href="https://t.me/uzanime_official" target='_blank' rel="noreferrer">
+            <a href="https://t.me/anivibe_official" target='_blank' rel="noreferrer">
               <div className="icon">
                 <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style={{ fill: 'white' }}>
                   <path d="M21.5 3.1L3.8 10.2c-.9.3-.9 1 .2 1.3l3 1 .8 4.5c.1.8.6.9 1.2.6l1.7-1.2 3.6 2.6c.7.5 1.3.2 1.5-.6l3.9-17.2c.2-.9-.3-1.4-1.5-1.1z" />
