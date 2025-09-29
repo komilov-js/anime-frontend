@@ -1,0 +1,312 @@
+// pageAnime.scss
+.page-anime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 50px 40px;
+  gap: 30px;
+  background-color: #f7f8fa;
+  .category-title{
+    color: red;
+  }
+
+
+  #hammasi {
+    padding: 12px 20px; // biroz kengaytirdik
+    color: white;
+    background-color: #ee000d;
+    border-radius: 8px; // yumaloqroq burchak
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease; // smooth transition
+
+    svg {
+      width: 16px; // kattaroq ikon
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background-color: #ff2a2a; // hover rang
+      transform: scale(1.05); // biroz kattalashish
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); // yumshoq soya
+
+      svg {
+        transform: translateX(3px); // ikonni biroz o'ngga siljitish
+      }
+    }
+
+    &:active {
+      transform: scale(0.98); // bosilganda biroz kichrayadi
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .category-title {
+    text-transform: uppercase;
+    font-size: 32px; // istalgan o'lcham
+    font-weight: 700; // qalinligi
+    color: #333; // rang
+
+  }
+
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    h1 {
+      font-size: 42px;
+      font-weight: 800;
+      color: #333; // Qora rangga o'zgartirildi
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #666; // Qora rangga o'zgartirildi
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    // gap: 10px;
+    row-gap: 30px;
+    width: 100%;
+    max-width: 1400px;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .page-anime-container {
+    position: relative;
+    transition: all 0.4s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .card-img {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      width: 260px;
+      height: 320px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Yengil soyaya qo'shildi
+
+      &:hover {
+        animation: glow 2s infinite;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 6px;
+        transition: all 0.5s ease;
+      }
+
+      &:hover img {
+        transform: scale(1.08);
+      }
+
+      .card-text {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        z-index: 3;
+        padding: 8px 16px;
+        color: #fff;
+        background: rgba(52, 52, 52, 0.85);
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      .card-icon {
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        z-index: 3;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: scale(1.1);
+
+          .heart-icon {
+            transform: scale(1.2);
+          }
+        }
+
+        .heart-icon {
+          transition: all 0.3s ease;
+          width: 24px;
+          height: 24px;
+
+          &.favorite {
+            animation: pulse 0.5s ease;
+          }
+        }
+      }
+
+      // O'zgartirish: Matn doimiy ko'rinadi
+      .image-text {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 15px 15px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+        color: #fff;
+        text-align: left;
+        // transform: translateY(0); // Doimiy ko'rinadi
+        transition: all 0.4s ease;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        p {
+          font-size: 16px; // Kichikroq o'lcham
+          margin: 0;
+          font-weight: 600;
+          line-height: 1.3;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+          display: -webkit-box;
+          -webkit-line-clamp: 2; // Maksimal 2 qator
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+
+      // Hoverda matn biroz ko'tariladi (ixtiyoriy)
+      &:hover .image-text {
+        padding-bottom: 20px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+      }
+    }
+  }
+}
+
+// Animatsiyalar
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Mobil moslashuvchanlik
+@media (max-width: 768px) {
+  .page-anime {
+    padding: 60px 20px;
+    background-color: #f7f8fa;
+
+    .page-header {
+      h1 {
+        font-size: 28px;
+        color: #333; // Qora rang
+      }
+
+      p {
+        font-size: 14px;
+        padding: 0 20px;
+        color: #666; // Qora rang
+      }
+    }
+
+    .anime-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 15px;
+    }
+
+    .page-anime-container {
+      .card-img {
+        width: 170px;
+        height: 220px;
+
+        .card-text {
+          top: 10px;
+          left: 10px;
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+
+        .card-icon {
+          width: 32px;
+          height: 32px;
+          bottom: 10px;
+          right: 10px;
+
+          .heart-icon {
+            width: 18px;
+            height: 18px;
+          }
+        }
+
+        .image-text {
+          padding: 12px 10px 10px;
+
+          p {
+            font-size: 14px;
+            -webkit-line-clamp: 2; // Mobile'da ham 2 qator
+          }
+        }
+
+        &:hover .image-text {
+          padding-bottom: 12px;
+        }
+      }
+    }
+  }
+}
+
+// Touch devices uchun alohida stil
+@media (hover: none) {
+  .page-anime-container {
+    .card-img {
+      .image-text {
+        transform: translateY(0); // Touch qurilmalarda ham doimiy ko'rinadi
+      }
+    }
+  }
+}

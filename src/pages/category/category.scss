@@ -1,0 +1,34 @@
+.pagination {
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+
+  button {
+    background: #2c2c2c; // orqa fon qora
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: #ff4d4d; // hover qizil
+      color: #fff;
+    }
+
+    &.active {
+      background: #ff0000; // aktiv sahifa qizil
+      color: #fff;
+      font-weight: bold;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      background: #660000; // disable holatda to‘q qizil
+      color: #aaa;
+    }
+  }
+}

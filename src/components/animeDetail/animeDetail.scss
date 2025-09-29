@@ -1,0 +1,334 @@
+.anime-detail {
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(40, 40, 40, 0.85) 100%);
+    z-index: 1;
+  }
+
+  .anime-detail-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+
+    // 📄 Text info
+    .anime-detail-text {
+      background: rgba(20, 20, 20, 0.92);
+      padding: 2rem;
+      border-radius: 8px;
+      border-left: 5px solid #f20114;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+
+      .anime-titles{
+        display: flex;
+        gap: 10px;
+      }
+      h1 {
+        color: #fff;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.7);
+      }
+
+      p {
+        color: #ccc;
+        line-height: 1.6;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .anime-meta {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+
+        .meta-item {
+          background: rgba(30, 30, 30, 0.9);
+          padding: 0.8rem;
+          border-radius: 4px;
+          border-left: 3px solid #333;
+          transition: all 0.3s ease;
+
+          &:hover {
+            border-left: 3px solid #f20114;
+          }
+
+          h3 {
+            color: #f20114;
+            margin: 0 0 0.3rem 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          }
+
+          p {
+            color: #eee;
+            margin: 0;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    // 🎬 Video container
+    .anime-video {
+      position: sticky;
+      top: 2rem;
+
+      .video-actions {
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+        gap: 10px;
+
+        a {
+          width: 50%;
+          text-decoration: none;
+          color: white;
+          border: 1px solid white;
+          padding: 8px;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            // border-color: #f20114;
+          }
+        }
+
+        button {
+          border-radius: 6px;
+          width: 50%;
+          background-color: transparent;
+          border: 1px solid white;
+          cursor: pointer;
+          padding: 10px;
+          color: white;
+          transition: all 0.3s ease;
+
+          &:hover {
+         
+          }
+        }
+
+        @media screen and (max-width: 600px) {
+          flex-direction: column;
+          button,
+          a {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      }
+
+      video,
+      iframe {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        aspect-ratio: 16/9;
+      }
+
+      p {
+        color: #fff;
+        font-size: 1.2rem;
+        background: rgba(30, 30, 30, 0.9);
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      // 📌 Seasons
+      .season-list {
+        margin-top: 1.5rem;
+        background: rgba(20, 20, 20, 0.9);
+        padding: 1.5rem;
+        border-radius: 8px;
+
+        h3 {
+          color: #fff;
+          margin: 0 0 1rem;
+          text-align: center;
+          font-size: 1.3rem;
+          position: relative;
+          padding-bottom: 0.5rem;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: #f20114;
+          }
+        }
+
+        .seasons {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.5rem;
+
+          .season {
+            background: rgba(113, 112, 112, 0.35);
+            color: #ddd;
+            text-align: center;
+            padding: 0.8rem 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+
+            &:hover {
+              color: #fff;
+              transform: translateY(-2px);
+              box-shadow: 0 3px 5px rgba(255, 255, 255, 0.3);
+            }
+
+            &.current {
+              background: #f20114;
+              color: #fff;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+
+      // 📌 Episodes
+      .episode-list {
+        margin-top: 1.5rem;
+        background: rgba(20, 20, 20, 0.9);
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+        h3 {
+          color: #fff;
+          margin: 0 0 1rem;
+          text-align: center;
+          font-size: 1.3rem;
+          position: relative;
+          padding-bottom: 0.5rem;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: #f20114;
+          }
+        }
+
+        .episodes {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.5rem;
+
+          .episode {
+            background: rgba(30, 30, 30, 0.9);
+            color: #ddd;
+            text-align: center;
+            padding: 0.7rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+
+            &:hover {
+              color: #fff;
+              transform: translateY(-2px);
+              box-shadow: 0 3px 8px rgba(242, 1, 20, 0.3);
+            }
+
+            &.current {
+              background: #f20114;
+              color: #fff;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 900px) {
+  .anime-detail {
+    .anime-detail-container {
+      grid-template-columns: 1fr;
+
+      .anime-video {
+        position: static;
+
+        .season-list .seasons {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .episode-list .episodes {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .anime-detail {
+    padding: 1rem;
+
+    .anime-detail-container {
+      .anime-detail-text {
+        padding: 1rem;
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+
+        .anime-meta {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .anime-video {
+        .season-list .seasons,
+        .episode-list .episodes {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    }
+  }
+}
