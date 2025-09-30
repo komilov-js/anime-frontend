@@ -9,12 +9,11 @@ import defImg from "../../imgs/default.jpg";
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [savedAnimes, setSavedAnimes] = useState([]);
-  const [favorites, setFavorites] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
 
   const { logout } = useContext(AuthContext);
 
-  // 📌 responsive itemsPerPage (kompyuterda 15, telefonda 12)
+  // 📌 responsive itemsPerPage
   const [itemsPerPage, setItemsPerPage] = useState(
     window.innerWidth <= 768 ? 12 : 15
   );
@@ -37,40 +36,20 @@ const Profile = () => {
     fetchWithAuth("https://komilov1.pythonanywhere.com/api/saved-animes/")
       .then((data) => setSavedAnimes(data))
       .catch((err) => console.error("Saved animelarni olishda xato:", err));
-
-    // LocalStorage'dan sevimlilarni yuklash
-    const storedFavorites =
-      JSON.parse(localStorage.getItem("animeFavorites")) || {};
-    setFavorites(storedFavorites);
   }, []);
 
-  const toggleFavorite = (id, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const updatedFavorites = { ...favorites };
-    if (updatedFavorites[id]) {
-      delete updatedFavorites[id];
-    } else {
-      updatedFavorites[id] = true;
-    }
-
-    setFavorites(updatedFavorites);
-    localStorage.setItem("animeFavorites", JSON.stringify(updatedFavorites));
-  };
-
-  // SVG Heart ikonkasi
-  const HeartIcon = ({ isFavorite }) => (
+  // 📌 SVG Save (Bookmark) ikonka
+  const SaveIcon = () => (
     <svg
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      className={`heart-icon ${isFavorite ? "favorite" : ""}`}
+      className="save-icon saved"
     >
       <path
-        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-        fill={isFavorite ? "#f60012" : "none"}
-        stroke={isFavorite ? "#f60012" : "white"}
+        d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
+        fill="#f60012"
+        stroke="#f60012"
         strokeWidth="2"
       />
     </svg>
@@ -102,7 +81,11 @@ const Profile = () => {
       <div className="profile-container">
         <img
           className="profile-img"
-          src={`${profile?.profile_img != null ? `https://komilov1.pythonanywhere.com${profile?.profile_img}` : defImg}`}
+          src={`${
+            profile?.profile_img != null
+              ? `https://komilov1.pythonanywhere.com${profile?.profile_img}`
+              : defImg
+          }`}
           alt={profile?.username}
         />
         <ul>
@@ -167,11 +150,9 @@ const Profile = () => {
                       <div className="image-text">
                         <p>{item.anime.title}</p>
                       </div>
-                      <div
-                        className="card-icon"
-                        onClick={(e) => toggleFavorite(item.id, e)}
-                      >
-                        <HeartIcon isFavorite={favorites[item.id]} />
+                      {/* ✅ Save icon yurak o‘rnida */}
+                      <div className="card-icon">
+                        <SaveIcon />
                       </div>
                     </div>
                   </Link>

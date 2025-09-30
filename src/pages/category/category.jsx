@@ -59,19 +59,20 @@ const CategoryPage = () => {
     localStorage.setItem("animeFavorites", JSON.stringify(updatedFavorites));
   };
 
-  const HeartIcon = ({ isFavorite }) => (
+  // ✅ Save Icon (Heart o‘rniga)
+  const SaveIcon = ({ isFavorite }) => (
     <svg
-      width="24"
-      height="24"
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
-      className={`heart-icon ${isFavorite ? "favorite" : ""}`}
+      fill={isFavorite ? "#f60012" : "none"}
+      stroke={isFavorite ? "#f60012" : "white"}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`save-icon ${isFavorite ? "favorite" : ""}`}
     >
-      <path
-        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-        fill={isFavorite ? "#f60012" : "none"}
-        stroke={isFavorite ? "#f60012" : "white"}
-        strokeWidth="2"
-      />
+      <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path>
     </svg>
   );
 
@@ -99,7 +100,6 @@ const CategoryPage = () => {
         {slug.replace(/-/g, " ")} ({animes.length})
       </h2>
 
-
       <div className="anime-grid">
         {selectedAnimes.length > 0 ? (
           selectedAnimes.map((item) => (
@@ -123,7 +123,7 @@ const CategoryPage = () => {
                     className="card-icon"
                     onClick={(e) => toggleFavorite(item.id, e)}
                   >
-                    <HeartIcon isFavorite={favorites[item.id]} />
+                    <SaveIcon isFavorite={favorites[item.id]} />
                   </div>
                 </div>
               </Link>
@@ -168,4 +168,4 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage; 
+export default CategoryPage;
