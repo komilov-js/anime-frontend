@@ -37,7 +37,7 @@ const Register = () => {
     setErrors({});
 
     try {
-      let response = await fetch("http://127.0.0.1:8000/api/users/register/", {
+      let response = await fetch("https://komilov1.pythonanywhere.com/api/users/register/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -51,7 +51,7 @@ const Register = () => {
       }
 
       // login qilish
-      let loginRes = await fetch("http://127.0.0.1:8000/api/users/login/", {
+      let loginRes = await fetch("https://komilov1.pythonanywhere.com/api/users/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -65,7 +65,7 @@ const Register = () => {
       localStorage.setItem("refresh", tokens.refresh);
 
       // profilni olish
-      let meRes = await fetch("http://127.0.0.1:8000/api/users/me/", {
+      let meRes = await fetch("https://komilov1.pythonanywhere.com/api/users/me/", {
         headers: { Authorization: `Bearer ${tokens.access}` },
       });
 

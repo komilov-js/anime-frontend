@@ -28,12 +28,12 @@ const Profile = () => {
 
   useEffect(() => {
     // Profil ma'lumotlarini olish
-    fetchWithAuth("http://127.0.0.1:8000/api/users/me/")
+    fetchWithAuth("https://komilov1.pythonanywhere.com/api/users/me/")
       .then((data) => setProfile(data))
       .catch((err) => console.error("Profile olishda xato:", err));
 
     // Saqlangan animelarni olish
-    fetchWithAuth("http://127.0.0.1:8000/api/saved-animes/")
+    fetchWithAuth("https://komilov1.pythonanywhere.com/api/saved-animes/")
       .then((data) => setSavedAnimes(data))
       .catch((err) => console.error("Saved animelarni olishda xato:", err));
 
@@ -101,7 +101,7 @@ const Profile = () => {
       <div className="profile-container">
         <img
           className="profile-img"
-          src={`http://127.0.0.1:8000${profile?.profile_img}`}
+          src={`https://komilov1.pythonanywhere.com${profile?.profile_img}`}
           alt={profile?.username}
         />
         <ul>

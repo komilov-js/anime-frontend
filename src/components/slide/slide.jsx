@@ -11,7 +11,7 @@ const Slide = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/animes/")
+    fetch("https://komilov1.pythonanywhere.com/api/animes/")
       .then((response) => response.json())
       .then((json) => {
         // Agar backend json object yuborsa, results arrayni olamiz

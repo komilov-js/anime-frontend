@@ -9,7 +9,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/categories/");
+        const res = await fetch("https://komilov1.pythonanywhere.com/api/categories/");
         const data = await res.json();
         setCategories(data);
       } catch (error) {

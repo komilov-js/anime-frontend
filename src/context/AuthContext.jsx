@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("access");
     if (token) {
-      fetchWithAuth("http://127.0.0.1:8000/api/users/me/")
+      fetchWithAuth("https://komilov1.pythonanywhere.com/api/animes/api/users/me/")
         .then((data) => {
           if (data && !data.detail) {
             setUser(data);

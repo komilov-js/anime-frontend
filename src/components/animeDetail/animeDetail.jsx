@@ -18,7 +18,7 @@ export default function AnimeDetail() {
     useEffect(() => {
         const fetchAnime = async () => {
             try {
-                const res = await fetch(`http://127.0.0.1:8000/api/animes/${slug}/`);
+                const res = await fetch(`https://komilov1.pythonanywhere.com/api/animes/${slug}/`);
                 if (!res.ok) throw new Error(`Server error: ${res.status}`);
                 const data = await res.json();
                 setAnime(data);
@@ -34,7 +34,7 @@ export default function AnimeDetail() {
                 if (user) {
                     try {
                         const savedRes = await fetchWithAuth(
-                            `http://127.0.0.1:8000/api/saved-animes/`
+                            `https://komilov1.pythonanywhere.com/api/saved-animes/`
                         );
                         if (savedRes && Array.isArray(savedRes)) {
                             const alreadySaved = savedRes.some(
@@ -61,7 +61,7 @@ export default function AnimeDetail() {
         }
 
         try {
-            const res = await fetchWithAuth(`http://127.0.0.1:8000/api/saved-animes/`, {
+            const res = await fetchWithAuth(`https://komilov1.pythonanywhere.com/api/saved-animes/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ anime_slug: anime.slug }),

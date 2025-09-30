@@ -29,7 +29,7 @@ const Nav = () => {
 
     const fetchSearch = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/animes/?search=${searchTerm}`);
+        const res = await fetch(`https://komilov1.pythonanywhere.com/api/animes/?search=${searchTerm}`);
         const data = await res.json();
         setSearchResults(data);
       } catch (error) {
@@ -44,7 +44,7 @@ const Nav = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/categories/");
+        const res = await fetch("https://komilov1.pythonanywhere.com/api/categories/");
         const data = await res.json();
         setCategories(data);
       } catch (error) {
@@ -135,7 +135,7 @@ const Nav = () => {
               <Link to='/profile'>
                 <img
                   className='profile-img'
-                  src={`http://127.0.0.1:8000${user?.profile_img}`}
+                  src={`https://komilov1.pythonanywhere.com${user?.profile_img}`}
                   alt={user?.username}
                 />
               </Link>

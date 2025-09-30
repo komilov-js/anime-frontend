@@ -11,7 +11,7 @@ const PageAnime = () => {
 
   useEffect(() => {
     // API dan ma'lumotlarni olish
-    fetch('http://127.0.0.1:8000/api/animes/')
+    fetch('https://komilov1.pythonanywhere.com/api/animes/')
       .then(res => res.json())
       .then(data => setAnimePage(data))
       .catch(error => console.error('Error fetching anime data:', error));

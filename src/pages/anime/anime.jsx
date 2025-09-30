@@ -9,7 +9,7 @@ const Anime = () => {
   useEffect(() => {
     const fetchAnime = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/animes/${slug}/`);
+        const res = await fetch(`https://komilov1.pythonanywhere.com/api/animes/${slug}/`);
         const data = await res.json();
         setAnime(data);
       } catch (error) {

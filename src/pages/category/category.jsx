@@ -29,7 +29,7 @@ const CategoryPage = () => {
     const fetchAnimes = async () => {
       try {
         const res = await fetch(
-          `http://127.0.0.1:8000/api/animes/?category=${slug}`
+          `https://komilov1.pythonanywhere.com/api/animes/?category=${slug}`
         );
         const data = await res.json();
         setAnimes(data);
