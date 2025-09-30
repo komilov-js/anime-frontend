@@ -13,6 +13,22 @@ const PageAnime = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
+    // 📱 Telefon va 💻 Kompyuter uchun limitni sozlash
+    const updateLimit = () => {
+      if (window.innerWidth <= 768) {
+        setLimit(12); // Telefon
+      } else {
+        setLimit(15); // Kompyuter
+      }
+    };
+
+    updateLimit(); // boshlanishida ishga tushadi
+    window.addEventListener("resize", updateLimit);
+
+    return () => window.removeEventListener("resize", updateLimit);
+  }, []);
+
+  useEffect(() => {
     // Anime ro'yxatini API’dan olish
     fetch('https://komilov1.pythonanywhere.com/api/animes/')
       .then(res => res.json())
@@ -41,21 +57,16 @@ const PageAnime = () => {
     const already = savedList.includes(slug);
 
     if (already) {
-      // Agar allaqachon saqlangan bo‘lsa, uni o‘chirish API kerak bo‘lishi mumkin (agar backend o‘chirishni qo‘llasa)
-      // Misol uchun DELETE id bilan: 
-      // await fetchWithAuth(`https://komilov1.pythonanywhere.com/api/saved-animes/${id}/`, { method: 'DELETE' });
       const newList = savedList.filter(s => s !== slug);
       setSavedList(newList);
-      // (agar backend’da delete endpoint bo‘lsa, shu joyda yubor)
+      // backend delete bo‘lsa shu yerda qo‘shasan
     } else {
-      // Saqlash: POST request API ga
       try {
         const res = await fetchWithAuth('https://komilov1.pythonanywhere.com/api/saved-animes/', {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ anime_slug: slug }),
         });
-        // Agar res muvaffaqiyat bersa (masalan id qaytsa)
         if (res && res.id) {
           setSavedList(prev => [...prev, slug]);
         } else {
