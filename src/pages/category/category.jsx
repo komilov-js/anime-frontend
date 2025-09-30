@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import "../../components/pageAnime/pageAnime.scss";
 import "../../components/loading/loading.scss";
 import "./category.scss";
+import { AuthContext } from "../../context/AuthContext";
+import { fetchWithAuth } from "../../utils/auth";
 
 const CategoryPage = () => {
   const { slug } = useParams();
   const [animes, setAnimes] = useState([]);
-  const [favorites, setFavorites] = useState({});
+  const [favorites, setFavorites] = useState({}); // API'dan kelgan saqlanganlar
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(
     window.innerWidth <= 768 ? 12 : 15
   );
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,6 +25,7 @@ const CategoryPage = () => {
   }, []);
 
   useEffect(() => {
+    // 🔹 kategoriyadagi animelarni olish
     const fetchAnimes = async () => {
       try {
         const res = await fetch(
@@ -35,27 +39,71 @@ const CategoryPage = () => {
         console.error("Category animes fetch error:", error);
       }
     };
+
     fetchAnimes();
 
-    const storedFavorites =
-      JSON.parse(localStorage.getItem("animeFavorites")) || {};
-    setFavorites(storedFavorites);
-  }, [slug]);
+    // 🔹 foydalanuvchi tizimga kirgan bo‘lsa, saqlangan animelarni olish
+    if (user) {
+      fetchWithAuth("https://komilov1.pythonanywhere.com/api/saved-animes/")
+        .then((res) => {
+          if (Array.isArray(res)) {
+            const favs = {};
+            res.forEach((item) => {
+              favs[item.anime.id] = true;
+            });
+            setFavorites(favs);
+          }
+        })
+        .catch((err) => console.error("Error fetching saved animes:", err));
+    }
+  }, [slug, user]);
 
-  const toggleFavorite = (id, e) => {
+  // 🔹 Saqlash / o‘chirish tugmasi
+  const toggleFavorite = async (anime, e) => {
     e.preventDefault();
     e.stopPropagation();
-    const updatedFavorites = { ...favorites };
-    if (updatedFavorites[id]) {
-      delete updatedFavorites[id];
-    } else {
-      updatedFavorites[id] = true;
+
+    if (!user) {
+      alert("Saqlash uchun tizimga kiring!");
+      return;
     }
-    setFavorites(updatedFavorites);
-    localStorage.setItem("animeFavorites", JSON.stringify(updatedFavorites));
+
+    const already = favorites[anime.id];
+
+    if (already) {
+      // 🔴 O‘chirish
+      try {
+        await fetchWithAuth(
+          `https://komilov1.pythonanywhere.com/api/saved-animes/${anime.id}/`,
+          { method: "DELETE" }
+        );
+        const updated = { ...favorites };
+        delete updated[anime.id];
+        setFavorites(updated);
+      } catch (err) {
+        console.error("Delete error:", err);
+      }
+    } else {
+      // 🟢 Saqlash
+      try {
+        const res = await fetchWithAuth(
+          "https://komilov1.pythonanywhere.com/api/saved-animes/",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ anime_slug: anime.slug }),
+          }
+        );
+        if (res && res.id) {
+          setFavorites({ ...favorites, [anime.id]: true });
+        }
+      } catch (err) {
+        console.error("Save error:", err);
+      }
+    }
   };
 
-  // ✅ Saqlash (bookmark) SVG shu yerda
+  // ✅ Saqlash (bookmark) SVG
   const SaveIcon = ({ isFavorite }) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -66,8 +114,8 @@ const CategoryPage = () => {
     >
       <path
         d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"
-        fill={isFavorite ? "#f60012" : "none"}     // 🔴 bosilganda qizil
-        stroke={isFavorite ? "#f60012" : "white"} // kontur rangi
+        fill={isFavorite ? "#f60012" : "none"}
+        stroke={isFavorite ? "#f60012" : "white"}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -119,7 +167,7 @@ const CategoryPage = () => {
                   </div>
                   <div
                     className="card-icon"
-                    onClick={(e) => toggleFavorite(item.id, e)}
+                    onClick={(e) => toggleFavorite(item, e)}
                   >
                     <SaveIcon isFavorite={favorites[item.id]} />
                   </div>
