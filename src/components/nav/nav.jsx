@@ -3,6 +3,7 @@ import './nav.scss';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './logo.png';
 import { AuthContext } from '../../context/AuthContext';
+import defImg from "../../imgs/default.jpg"
 
 const Nav = () => {
   const { user } = useContext(AuthContext);
@@ -135,7 +136,7 @@ const Nav = () => {
               <Link to='/profile'>
                 <img
                   className='profile-img'
-                  src={`https://komilov1.pythonanywhere.com${user?.profile_img}`}
+                  src={`https://komilov1.pythonanywhere.com${user?.profile_img || defImg}`}
                   alt={user?.username}
                 />
               </Link>
