@@ -4,6 +4,7 @@ import "./profile.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import "../../components/loading/loading.scss";
+import defImg from "../../imgs/default.jpg";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
