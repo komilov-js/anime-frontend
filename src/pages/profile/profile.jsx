@@ -101,7 +101,7 @@ const Profile = () => {
       <div className="profile-container">
         <img
           className="profile-img"
-          src={`https://komilov1.pythonanywhere.com${profile?.profile_img}`}
+          src={`${user?.profile_img != null ? `https://komilov1.pythonanywhere.com${user?.profile_img}` : defImg}`}
           alt={profile?.username}
         />
         <ul>
