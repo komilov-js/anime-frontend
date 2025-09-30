@@ -1,11 +1,12 @@
 // pages/animeDetail/AnimeDetail.jsx
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
+import { Helmet } from "react-helmet-async"; // ✅ SEO uchun
 import "./animeDetail.scss";
 import { FaTelegramPlane } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import { fetchWithAuth } from "../../utils/auth";
-import '..//loading/loading.scss';
+import "..//loading/loading.scss";
 
 export default function AnimeDetail() {
     const { slug } = useParams();
@@ -30,7 +31,6 @@ export default function AnimeDetail() {
                     }
                 }
 
-                // 🔹 Foydalanuvchi shu animeni saqlaganmi, tekshirish
                 if (user) {
                     try {
                         const savedRes = await fetchWithAuth(
@@ -67,11 +67,10 @@ export default function AnimeDetail() {
                 body: JSON.stringify({ anime_slug: anime.slug }),
             });
 
-            // 🔹 Agar backend allaqachon saqlangan deb qaytarsa, xatoni tutib olamiz
             if (res && res.id) {
                 setSaved(true);
             } else if (res?.detail?.includes("allaqachon saqlagansiz")) {
-                setSaved(true); // oldin saqlangan bo‘lsa ham tugma o‘zgaradi
+                setSaved(true);
             } else {
                 alert("Saqlashda xatolik yuz berdi");
             }
@@ -81,15 +80,13 @@ export default function AnimeDetail() {
         }
     };
 
-
-    if (!anime || anime.length === 0) {
+    if (!anime) {
         return (
             <div className="loader-container">
                 <div className="loader"></div>
             </div>
         );
     }
-
 
     return (
         <div
@@ -100,6 +97,26 @@ export default function AnimeDetail() {
                 backgroundPosition: "center",
             }}
         >
+            {/* ✅ SEO META TEG QO‘SHILDI */}
+            <Helmet>
+                <title>{anime.title} — Anivibe</title>
+                <meta name="description" content={anime.description?.slice(0, 160) || "Anime haqida ma'lumot"} />
+                <meta name="keywords" content={`${anime.title}, ${anime.genre}, anime, anivibe, o‘zbekcha anime`} />
+
+                {/* Open Graph */}
+                <meta property="og:title" content={`${anime.title} — Anivibe`} />
+                <meta property="og:description" content={anime.description?.slice(0, 200) || "Anime tafsilotlari"} />
+                <meta property="og:image" content={anime.bg_image || "https://anivibe.uz/logo.png"} />
+                <meta property="og:url" content={`https://anivibe.uz/anime/${slug}`} />
+                <meta property="og:type" content="video.movie" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={`${anime.title} — Anivibe`} />
+                <meta name="twitter:description" content={anime.description?.slice(0, 200) || "Anime tafsilotlari"} />
+                <meta name="twitter:image" content={anime.bg_image || "https://anivibe.uz/logo.png"} />
+            </Helmet>
+
             <div className="anime-detail-container">
                 <div className="anime-video">
                     {currentEpisode?.video_file ? (
@@ -151,7 +168,6 @@ export default function AnimeDetail() {
                                         }}
                                     >
                                         {season.season_number}-fasl
-
                                     </div>
                                 ))}
                             </div>
@@ -219,7 +235,7 @@ export default function AnimeDetail() {
                         </div>
                         <div className="meta-item">
                             <h3>Yosh chegarasi</h3>
-                            <p>{anime.yosh_chegara  || '15+'}</p>
+                            <p>{anime.yosh_chegara || "15+"}</p>
                         </div>
                         <div className="meta-item">
                             <h3>Yil</h3>
