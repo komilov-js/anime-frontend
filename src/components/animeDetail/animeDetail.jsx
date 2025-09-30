@@ -99,22 +99,22 @@ export default function AnimeDetail() {
         >
             {/* ✅ SEO META TEG QO‘SHILDI */}
             <Helmet>
-                <title>{anime.title} — Anivibe</title>
-                <meta name="description" content={anime.description?.slice(0, 160) || "Anime haqida ma'lumot"} />
-                <meta name="keywords" content={`${anime.title}, ${anime.genre}, anime, anivibe, o‘zbekcha anime`} />
+                <title>{anime?.title} — Anivibe</title>
+                <meta name="description" content={anime?.description?.slice(0, 160) || "Anime haqida ma'lumot"} />
+                <meta name="keywords" content={`${anime?.title}, ${anime?.genre}, anime, anivibe, o‘zbekcha anime`} />
 
                 {/* Open Graph */}
-                <meta property="og:title" content={`${anime.title} — Anivibe`} />
-                <meta property="og:description" content={anime.description?.slice(0, 200) || "Anime tafsilotlari"} />
-                <meta property="og:image" content={anime.bg_image || "https://anivibe.uz/logo.png"} />
+                <meta property="og:title" content={`${anime?.title} — Anivibe`} />
+                <meta property="og:description" content={anime?.description?.slice(0, 200) || "Anime tafsilotlari"} />
+                <meta property="og:image" content={anime?.bg_image || "https://anivibe.uz/logo.png"} />
                 <meta property="og:url" content={`https://anivibe.uz/anime/${slug}`} />
                 <meta property="og:type" content="video.movie" />
 
                 {/* Twitter */}
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={`${anime.title} — Anivibe`} />
-                <meta name="twitter:description" content={anime.description?.slice(0, 200) || "Anime tafsilotlari"} />
-                <meta name="twitter:image" content={anime.bg_image || "https://anivibe.uz/logo.png"} />
+                <meta name="twitter:title" content={`${anime?.title} — Anivibe`} />
+                <meta name="twitter:description" content={anime?.description?.slice(0, 200) || "Anime tafsilotlari"} />
+                <meta name="twitter:image" content={anime?.bg_image || "https://anivibe.uz/logo.png"} />
             </Helmet>
 
             <div className="anime-detail-container">
