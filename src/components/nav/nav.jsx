@@ -136,7 +136,7 @@ const Nav = () => {
               <Link to='/profile'>
                 <img
                   className='profile-img'
-                  src={`https://komilov1.pythonanywhere.com${user?.profile_img || defImg}`}
+                  src={`${user?.profile_img != null ? `https://komilov1.pythonanywhere.com${user?.profile_img}` : defImg}`}
                   alt={user?.username}
                 />
               </Link>
