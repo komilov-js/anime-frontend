@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './pageAnime.scss';
 import '..//loading/loading.scss';
+import YandexAd from '../../yandexAds/ad1/ad1';
 
 
 const PageAnime = () => {
@@ -118,6 +119,10 @@ const PageAnime = () => {
           </path>
         </svg>
       </Link>
+
+      <div className="ad-block">
+        <YandexAd />
+      </div>
     </div>
   );
 };
