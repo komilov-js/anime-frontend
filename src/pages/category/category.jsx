@@ -9,18 +9,14 @@ const CategoryPage = () => {
   const [animes, setAnimes] = useState([]);
   const [favorites, setFavorites] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-
-  // 📌 responsive itemsPerPage
   const [itemsPerPage, setItemsPerPage] = useState(
     window.innerWidth <= 768 ? 12 : 15
   );
 
   useEffect(() => {
-    // ekran o‘lchami o‘zgarsa yangilash
     const handleResize = () => {
       setItemsPerPage(window.innerWidth <= 768 ? 12 : 15);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -59,20 +55,23 @@ const CategoryPage = () => {
     localStorage.setItem("animeFavorites", JSON.stringify(updatedFavorites));
   };
 
-  // ✅ Save Icon (Heart o‘rniga)
+  // ✅ Saqlash (bookmark) SVG shu yerda
   const SaveIcon = ({ isFavorite }) => (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
       width="22"
       height="22"
       viewBox="0 0 24 24"
-      fill={isFavorite ? "#f60012" : "none"}
-      stroke={isFavorite ? "#f60012" : "white"}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
       className={`save-icon ${isFavorite ? "favorite" : ""}`}
     >
-      <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path>
+      <path
+        d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"
+        fill={isFavorite ? "#f60012" : "none"}     // 🔴 bosilganda qizil
+        stroke={isFavorite ? "#f60012" : "white"} // kontur rangi
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 
@@ -84,7 +83,6 @@ const CategoryPage = () => {
     );
   }
 
-  // 📌 pagination
   const totalPages = Math.ceil(animes.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const selectedAnimes = animes.slice(startIndex, startIndex + itemsPerPage);
@@ -134,7 +132,6 @@ const CategoryPage = () => {
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="pagination">
           <button
