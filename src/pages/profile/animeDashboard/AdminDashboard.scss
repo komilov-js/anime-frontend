@@ -1,0 +1,73 @@
+.admin-dashboard {
+  padding: 20px;
+
+  h1 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+  .stats-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px 20px;
+      min-width: 200px;
+      text-align: center;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      h2 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #555;
+      }
+
+      p {
+        font-size: 28px;
+        font-weight: bold;
+        color: #f60012;
+      }
+    }
+
+    .active-card p {
+      color: #28a745; // yashil rang faol userlar uchun
+    }
+  }
+
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #f60012;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  }
+
+  .error {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+  }
+}

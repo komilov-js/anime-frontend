@@ -14,6 +14,7 @@ import News from './components/news/news'
 import Notification from './components/notification/notification'
 import ScrollToTop from './components/scrollTop/scrollTop'
 import NotFound from './pages/notFound/notFound'
+import AdminDashboard from './pages/profile/animeDashboard/AdminDashboard'
 
 const AppContext = () => {
   const { user } = useContext(AuthContext)
@@ -44,6 +45,7 @@ const AppContext = () => {
         <Route path="/news" element={<News />} />
         <Route path="/notifications" element={<Notification />} />
         <Route path="*" element={<NotFound />} />
+        {user && user.is_admin && <Route path="/admin" element={<AdminDashboard />} />}
       </Routes>
       <Footer />
     </>
