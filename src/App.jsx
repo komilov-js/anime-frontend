@@ -45,7 +45,7 @@ const AppContext = () => {
         <Route path="/news" element={<News />} />
         <Route path="/notifications" element={<Notification />} />
         <Route path="*" element={<NotFound />} />
-        {user && user.is_admin && <Route path="/admin" element={<AdminDashboard />} />}
+        <Route path="/admin" element={<AdminDashboard />}/>
       </Routes>
       <Footer />
     </>
