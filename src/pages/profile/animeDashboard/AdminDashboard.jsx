@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchWithAuth } from "../../utils/auth"; // token bilan fetch qilish
+import { fetchWithAuth } from "../../../utils/auth";
 import "./AdminDashboard.scss"; // styling fayli
 
 const AdminDashboard = () => {
