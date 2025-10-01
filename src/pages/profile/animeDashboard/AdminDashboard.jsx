@@ -9,7 +9,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchWithAuth("https://komilov1.pythonanywhere.com/api/user/admin-stats/")
+    fetchWithAuth("https://komilov1.pythonanywhere.com/api/users/admin-stats/")
       .then((data) => {
         setStats(data);
         setLoading(false);
