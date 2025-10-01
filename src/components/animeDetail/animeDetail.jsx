@@ -80,6 +80,57 @@ export default function AnimeDetail() {
         }
     };
 
+
+useEffect(() => {
+    if (!anime) return;
+
+    // Title
+    const title = `${anime.title}${currentSeason ? ` — ${currentSeason.title}` : ""}${
+        currentEpisode && currentSeason?.episodes.length > 1 ? ` — ${currentEpisode.episode_number}-qism ${currentEpisode.title || ""}` : ""
+    } — Anivibe`;
+    document.title = title;
+
+    // Description
+    const description = currentEpisode?.title
+        ? `${anime.description?.slice(0, 160) || ""} — ${currentSeason?.title || ""} ${currentEpisode?.title}`
+        : anime.description?.slice(0, 160) || "Anime haqida ma'lumot";
+
+    const metaDescription = document.querySelector("meta[name='description']");
+    if (metaDescription) metaDescription.setAttribute("content", description);
+
+    const metaKeywords = document.querySelector("meta[name='keywords']");
+    if (metaKeywords)
+        metaKeywords.setAttribute(
+            "content",
+            `${anime.title}, ${currentSeason?.title || ""}, ${currentEpisode?.title || ""}, ${anime.genre}, anime, anivibe, o‘zbekcha anime`
+        );
+
+    // Open Graph
+    const ogTitle = document.querySelector("meta[property='og:title']");
+    if (ogTitle) ogTitle.setAttribute("content", title);
+
+    const ogDescription = document.querySelector("meta[property='og:description']");
+    if (ogDescription) ogDescription.setAttribute("content", description);
+
+    const ogImage = document.querySelector("meta[property='og:image']");
+    if (ogImage) ogImage.setAttribute("content", anime.bg_image || "https://anivibe.uz/logo.png");
+
+    const ogUrl = document.querySelector("meta[property='og:url']");
+    if (ogUrl) ogUrl.setAttribute("content", `https://anivibe.uz/anime/${slug}`);
+
+    // Twitter
+    const twitterTitle = document.querySelector("meta[name='twitter:title']");
+    if (twitterTitle) twitterTitle.setAttribute("content", title);
+
+    const twitterDescription = document.querySelector("meta[name='twitter:description']");
+    if (twitterDescription) twitterDescription.setAttribute("content", description);
+
+    const twitterImage = document.querySelector("meta[name='twitter:image']");
+    if (twitterImage) twitterImage.setAttribute("content", anime.bg_image || "https://anivibe.uz/logo.png");
+}, [anime, currentSeason, currentEpisode, slug]);
+
+
+
     if (!anime) {
         return (
             <div className="loader-container">
@@ -97,25 +148,6 @@ export default function AnimeDetail() {
                 backgroundPosition: "center",
             }}
         >
-            {/* ✅ SEO META TEG QO‘SHILDI */}
-            <Helmet>
-                <title>{anime?.title} — Anivibe</title>
-                <meta name="description" content={anime?.description?.slice(0, 160) || "Anime haqida ma'lumot"} />
-                <meta name="keywords" content={`${anime?.title}, ${anime?.genre}, anime, anivibe, o‘zbekcha anime`} />
-
-                {/* Open Graph */}
-                <meta property="og:title" content={`${anime?.title} — Anivibe`} />
-                <meta property="og:description" content={anime?.description?.slice(0, 200) || "Anime tafsilotlari"} />
-                <meta property="og:image" content={anime?.bg_image || "https://anivibe.uz/logo.png"} />
-                <meta property="og:url" content={`https://anivibe.uz/anime/${slug}`} />
-                <meta property="og:type" content="video.movie" />
-
-                {/* Twitter */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={`${anime?.title} — Anivibe`} />
-                <meta name="twitter:description" content={anime?.description?.slice(0, 200) || "Anime tafsilotlari"} />
-                <meta name="twitter:image" content={anime?.bg_image || "https://anivibe.uz/logo.png"} />
-            </Helmet>
 
             <div className="anime-detail-container">
                 <div className="anime-video">
