@@ -7,6 +7,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import { fetchWithAuth } from "../../utils/auth";
 import "..//loading/loading.scss";
+import YandexAd2 from "../../yandexAds/ad2/ad2";
 
 export default function AnimeDetail() {
     const { slug } = useParams();
@@ -81,53 +82,52 @@ export default function AnimeDetail() {
     };
 
 
-useEffect(() => {
-    if (!anime) return;
+    useEffect(() => {
+        if (!anime) return;
 
-    // Title
-    const title = `${anime.title}${currentSeason ? ` — ${currentSeason.title}` : ""}${
-        currentEpisode && currentSeason?.episodes.length > 1 ? ` — ${currentEpisode.episode_number}-qism ${currentEpisode.title || ""}` : ""
-    } — Anivibe`;
-    document.title = title;
+        // Title
+        const title = `${anime.title}${currentSeason ? ` — ${currentSeason.title}` : ""}${currentEpisode && currentSeason?.episodes.length > 1 ? ` — ${currentEpisode.episode_number}-qism ${currentEpisode.title || ""}` : ""
+            } — Anivibe`;
+        document.title = title;
 
-    // Description
-    const description = currentEpisode?.title
-        ? `${anime.description?.slice(0, 160) || ""} — ${currentSeason?.title || ""} ${currentEpisode?.title}`
-        : anime.description?.slice(0, 160) || "Anime haqida ma'lumot";
+        // Description
+        const description = currentEpisode?.title
+            ? `${anime.description?.slice(0, 160) || ""} — ${currentSeason?.title || ""} ${currentEpisode?.title}`
+            : anime.description?.slice(0, 160) || "Anime haqida ma'lumot";
 
-    const metaDescription = document.querySelector("meta[name='description']");
-    if (metaDescription) metaDescription.setAttribute("content", description);
+        const metaDescription = document.querySelector("meta[name='description']");
+        if (metaDescription) metaDescription.setAttribute("content", description);
 
-    const metaKeywords = document.querySelector("meta[name='keywords']");
-    if (metaKeywords)
-        metaKeywords.setAttribute(
-            "content",
-            `${anime.title}, ${currentSeason?.title || ""}, ${currentEpisode?.title || ""}, ${anime.genre}, anime, anivibe, o‘zbekcha anime`
-        );
+        const metaKeywords = document.querySelector("meta[name='keywords']");
+        if (metaKeywords)
+            metaKeywords.setAttribute(
+                "content",
+                `${anime.title}, ${currentSeason?.title || ""}, ${currentEpisode?.title || ""}, ${anime.genre}, anime, anivibe, o‘zbekcha anime`
+            );
 
-    // Open Graph
-    const ogTitle = document.querySelector("meta[property='og:title']");
-    if (ogTitle) ogTitle.setAttribute("content", title);
+        // Open Graph
+        const ogTitle = document.querySelector("meta[property='og:title']");
+        if (ogTitle) ogTitle.setAttribute("content", title);
 
-    const ogDescription = document.querySelector("meta[property='og:description']");
-    if (ogDescription) ogDescription.setAttribute("content", description);
+        const ogDescription = document.querySelector("meta[property='og:description']");
+        if (ogDescription) ogDescription.setAttribute("content", description);
 
-    const ogImage = document.querySelector("meta[property='og:image']");
-    if (ogImage) ogImage.setAttribute("content", anime.bg_image || "https://anivibe.uz/logo.png");
+        const ogImage = document.querySelector("meta[property='og:image']");
+        if (ogImage) ogImage.setAttribute("content", anime.bg_image || "https://anivibe.uz/logo.png");
 
-    const ogUrl = document.querySelector("meta[property='og:url']");
-    if (ogUrl) ogUrl.setAttribute("content", `https://anivibe.uz/anime/${slug}`);
+        const ogUrl = document.querySelector("meta[property='og:url']");
+        if (ogUrl) ogUrl.setAttribute("content", `https://anivibe.uz/anime/${slug}`);
 
-    // Twitter
-    const twitterTitle = document.querySelector("meta[name='twitter:title']");
-    if (twitterTitle) twitterTitle.setAttribute("content", title);
+        // Twitter
+        const twitterTitle = document.querySelector("meta[name='twitter:title']");
+        if (twitterTitle) twitterTitle.setAttribute("content", title);
 
-    const twitterDescription = document.querySelector("meta[name='twitter:description']");
-    if (twitterDescription) twitterDescription.setAttribute("content", description);
+        const twitterDescription = document.querySelector("meta[name='twitter:description']");
+        if (twitterDescription) twitterDescription.setAttribute("content", description);
 
-    const twitterImage = document.querySelector("meta[name='twitter:image']");
-    if (twitterImage) twitterImage.setAttribute("content", anime.bg_image || "https://anivibe.uz/logo.png");
-}, [anime, currentSeason, currentEpisode, slug]);
+        const twitterImage = document.querySelector("meta[name='twitter:image']");
+        if (twitterImage) twitterImage.setAttribute("content", anime.bg_image || "https://anivibe.uz/logo.png");
+    }, [anime, currentSeason, currentEpisode, slug]);
 
 
 
@@ -244,36 +244,42 @@ useEffect(() => {
                 </div>
 
                 <div className="anime-detail-text">
-                    <div className="anime-titles" style={{ display: 'flex', flexDirection: 'column' }}>
-                        {currentSeason && <h1 className="season-title">{anime.title} {currentSeason.title}</h1>}
+                    <div className="anime-detail-text-text">
+                        <div className="anime-titles" style={{ display: 'flex', flexDirection: 'column' }}>
+                            {currentSeason && <h1 className="season-title">{anime.title} {currentSeason.title}</h1>}
+                        </div>
+                        <p>{anime.description}</p>
+                        <div className="anime-meta">
+                            <div className="meta-item">
+                                <h3>Mamlakat</h3>
+                                <p>{anime.countir || "Yaponiya"}</p>
+                            </div>
+                            <div className="meta-item">
+                                <h3>Rejissor</h3>
+                                <p>{anime.director || "Miyuki Kuroki"}</p>
+                            </div>
+                            <div className="meta-item">
+                                <h3>Studiya</h3>
+                                <p>{anime.studio || "CloverWorks"}</p>
+                            </div>
+                            <div className="meta-item">
+                                <h3>Janr</h3>
+                                <p>{anime.genre || "Anime"}</p>
+                            </div>
+                            <div className="meta-item">
+                                <h3>Yosh chegarasi</h3>
+                                <p>{anime.yosh_chegara || "15+"}</p>
+                            </div>
+                            <div className="meta-item">
+                                <h3>Yil</h3>
+                                <p>{anime.year || "2024"}</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>{anime.description}</p>
-                    <div className="anime-meta">
-                        <div className="meta-item">
-                            <h3>Mamlakat</h3>
-                            <p>{anime.countir || "Yaponiya"}</p>
-                        </div>
-                        <div className="meta-item">
-                            <h3>Rejissor</h3>
-                            <p>{anime.director || "Miyuki Kuroki"}</p>
-                        </div>
-                        <div className="meta-item">
-                            <h3>Studiya</h3>
-                            <p>{anime.studio || "CloverWorks"}</p>
-                        </div>
-                        <div className="meta-item">
-                            <h3>Janr</h3>
-                            <p>{anime.genre || "Anime"}</p>
-                        </div>
-                        <div className="meta-item">
-                            <h3>Yosh chegarasi</h3>
-                            <p>{anime.yosh_chegara || "15+"}</p>
-                        </div>
-                        <div className="meta-item">
-                            <h3>Yil</h3>
-                            <p>{anime.year || "2024"}</p>
-                        </div>
-                    </div>
+                <div className="ad-block">
+                    <YandexAd2 />
+                </div>
+
                 </div>
             </div>
         </div>

@@ -29,13 +29,20 @@
     gap: 2rem;
     align-items: start;
 
+    .ad-block {
+      width: 100%;
+    }
+
     // 📄 Text info
     .anime-detail-text {
-      background: rgba(20, 20, 20, 0.92);
-      padding: 2rem;
-      border-radius: 8px;
-      border-left: 5px solid #f20114;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      
+      .anime-detail-text-text {
+        background: rgba(20, 20, 20, 0.92);
+        padding: 2rem;
+        border-radius: 8px;
+        border-left: 5px solid #f20114;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
 
       .anime-titles{
         display: flex;
@@ -307,6 +314,9 @@
     padding: 1rem;
 
     .anime-detail-container {
+      .ad-block {
+        display: none;
+      }
       .anime-detail-text {
         padding: 1rem;
 

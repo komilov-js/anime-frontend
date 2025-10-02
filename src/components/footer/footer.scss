@@ -6,8 +6,15 @@ $muted: #a8b0be;
 $accent: #f60012;
 $link-underline: rgba(255,255,255,0.06);
 
-.site-footer {
+.footer-container {
   background: #101010;
+
+  .ad-block-3 {
+    width: 100%;
+  }
+}
+
+.site-footer {
   color: #e6eef8;
   padding: 48px 20px 24px;
   font-family: Inter, "Helvetica Neue", Arial, sans-serif;
