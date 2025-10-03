@@ -1,12 +1,12 @@
 // pages/animeDetail/AnimeDetail.jsx
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import { Helmet } from "react-helmet-async"; // ✅ SEO uchun
+import { Helmet } from "react-helmet-async";
 import "./animeDetail.scss";
 import { FaTelegramPlane } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import { fetchWithAuth } from "../../utils/auth";
-import "..//loading/loading.scss";
+import "../loading/loading.scss";
 import YandexAd2 from "../../yandexAds/ad2/ad2";
 
 export default function AnimeDetail() {
@@ -94,25 +94,60 @@ export default function AnimeDetail() {
     );
   }
 
-  // SEO uchun dinamik ma’lumotlar
+  // SEO uchun dinamik ma'lumotlar
   const seoTitle = `${anime.title}${
     currentSeason ? ` — ${currentSeason.title}` : ""
   }${
     currentEpisode && currentSeason?.episodes.length > 1
-      ? ` — ${currentEpisode.episode_number}-qism ${
-          currentEpisode.title || ""
-        }`
+      ? ` — ${currentEpisode.episode_number}-qism ${currentEpisode.title || ""}`
       : ""
-  } — Anivibe`;
+  } | Anivibe - O'zbekcha Anime`;
 
-  const seoDescription = currentEpisode?.title
-    ? `${anime.description?.slice(0, 160) || ""} — ${
-        currentSeason?.title || ""
-      } ${currentEpisode?.title}`
-    : anime.description?.slice(0, 160) || "Anime haqida ma'lumot";
+  const seoDescription = `${
+    anime.description?.slice(0, 150) || `${anime.title} anime seriali`
+  }${
+    currentSeason ? ` ${currentSeason.title}` : ""
+  }${
+    currentEpisode && currentSeason?.episodes.length > 1
+      ? ` ${currentEpisode.episode_number}-qism`
+      : ""
+  }. ${anime.genre || "Anime"} | ${anime.year || "2024"} | HD sifratda`;
 
   const seoImage = anime.bg_image || "https://anivibe.uz/logo.png";
   const seoUrl = `https://anivibe.uz/anime/${slug}`;
+
+  // Schema.org ma'lumotlari
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Movie",
+    "name": anime.title,
+    "description": anime.description?.slice(0, 200) || seoDescription,
+    "image": seoImage,
+    "genre": anime.genre || "Anime",
+    "dateCreated": anime.year || "2024",
+    "director": {
+      "@type": "Person",
+      "name": anime.director || "Noma'lum"
+    },
+    "productionCompany": {
+      "@type": "Organization",
+      "name": anime.studio || "Noma'lum"
+    },
+    "countryOfOrigin": anime.country || "Japan",
+    "contentRating": anime.yosh_chegara || "15+",
+    "url": seoUrl
+  };
+
+  // Video episode bo'lsa VideoObject schema qo'shamiz
+  if (currentEpisode) {
+    schemaData["@type"] = "VideoObject";
+    schemaData.name = seoTitle;
+    schemaData.description = seoDescription;
+    schemaData.thumbnailUrl = seoImage;
+    schemaData.uploadDate = new Date().toISOString().split('T')[0];
+    schemaData.contentUrl = currentEpisode.video_file || currentEpisode.video_url;
+    schemaData.embedUrl = currentEpisode.video_url || seoUrl;
+  }
 
   return (
     <div
@@ -123,29 +158,91 @@ export default function AnimeDetail() {
         backgroundPosition: "center",
       }}
     >
-      {/* ✅ Helmet ichida SEO ma’lumotlar */}
+      {/* ✅ Mukammal SEO Optimizatsiya */}
       <Helmet>
+        {/* Asosiy SEO Meta Teqlari */}
         <title>{seoTitle}</title>
         <meta name="description" content={seoDescription} />
-        <meta
-          name="keywords"
+        <meta 
+          name="keywords" 
           content={`${anime.title}, ${currentSeason?.title || ""}, ${
             currentEpisode?.title || ""
-          }, ${anime.genre}, anime, anivibe, o‘zbekcha anime`}
+          }, ${anime.genre}, anime, anivibe, o'zbekcha anime, ${anime.year || "2024"}, HD anime`} 
         />
-
-        {/* Open Graph */}
+        
+        {/* Texnik Meta Teqlari */}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={seoUrl} />
+        
+        {/* Tillar uchun Alternativ URLlar */}
+        <link rel="alternate" hreflang="uz" href={seoUrl} />
+        <link rel="alternate" hreflang="ru" href={`${seoUrl}?lang=ru`} />
+        <link rel="alternate" hreflang="x-default" href={seoUrl} />
+        
+        {/* Open Graph (Facebook) */}
         <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={seoDescription} />
         <meta property="og:image" content={seoImage} />
         <meta property="og:url" content={seoUrl} />
         <meta property="og:type" content="video.movie" />
-
-        {/* Twitter Card */}
+        <meta property="og:site_name" content="Anivibe" />
+        <meta property="og:locale" content="uz_UZ" />
+        {currentEpisode && (
+          <>
+            <meta property="og:video" content={currentEpisode.video_file || currentEpisode.video_url} />
+            <meta property="og:video:type" content="video/mp4" />
+            <meta property="og:video:width" content="1280" />
+            <meta property="og:video:height" content="720" />
+          </>
+        )}
+        
+        {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={seoTitle} />
         <meta name="twitter:description" content={seoDescription} />
         <meta name="twitter:image" content={seoImage} />
+        <meta name="twitter:site" content="@anivibe" />
+        <meta name="twitter:creator" content="@anivibe" />
+        
+        {/* Qo'shimcha Meta Teqlar */}
+        <meta name="author" content="Anivibe" />
+        <meta name="copyright" content="Anivibe" />
+        <meta name="application-name" content="Anivibe" />
+        
+        {/* Schema.org Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(schemaData)}
+        </script>
+        
+        {/* Breadcrumb Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Asosiy",
+                "item": "https://anivibe.uz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Anime",
+                "item": "https://anivibe.uz/anime"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": anime.title,
+                "item": seoUrl
+              }
+            ]
+          })}
+        </script>
       </Helmet>
 
       <div className="anime-detail-container">
@@ -153,7 +250,7 @@ export default function AnimeDetail() {
           {currentEpisode?.video_file ? (
             <video key={currentEpisode.video_file} controls autoPlay>
               <source src={currentEpisode.video_file} type="video/mp4" />
-              Sizning brauzeringiz video formatini qo‘llamaydi.
+              Sizning brauzeringiz video formatini qo'llamaydi.
             </video>
           ) : currentEpisode?.video_url ? (
             currentEpisode.video_url.trim().startsWith("<iframe") ? (
@@ -179,7 +276,7 @@ export default function AnimeDetail() {
             <button onClick={handleSave} disabled={saved}>
               {saved ? "Saqlandi ✅" : "Saqlash"}
             </button>
-            <a href="https://t.me/anivibe_official" target="_blank">
+            <a href="https://t.me/anivibe_official" target="_blank" rel="noopener noreferrer">
               Telegram Kanalimizga Qo'shiling <FaTelegramPlane />
             </a>
           </div>
@@ -275,7 +372,7 @@ export default function AnimeDetail() {
             <div className="anime-meta">
               <div className="meta-item">
                 <h3>Mamlakat</h3>
-                <p>{anime.countir || "Yaponiya"}</p>
+                <p>{anime.country || "Yaponiya"}</p>
               </div>
               <div className="meta-item">
                 <h3>Rejissor</h3>
